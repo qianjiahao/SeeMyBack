@@ -11,7 +11,7 @@
 				margin: 0px;
 				overflow: hidden;
 			}
-      
+
       #title {
         position: fixed;
         top: 10px;
@@ -36,6 +36,7 @@
 
 			init();
 			animate();
+
 			function init() {
 
 				scene = new THREE.Scene();
@@ -47,7 +48,7 @@
 
 				controls = new THREE.TrackballControls( camera );
 
-				controls.rotateSpeed = 2.0;
+				controls.rotateSpeed = 4.0;
 				controls.zoomSpeed = 0.3;
 				controls.panSpeed = 0.2;
 
@@ -73,7 +74,8 @@
 
 				var loader = new THREE.PCDLoader();
 				loader.load( 'model/pcd/Zaghetto.pcd', function ( mesh ) {
-
+					
+					console.log(mesh)
 					scene.add( mesh );
 					var center = mesh.geometry.boundingSphere.center;
 					controls.target.set( center.x, center.y, center.z);
@@ -136,6 +138,9 @@
 
 			}
 
+			window.onload = function () {
+				console.log('all loaded')
+			}
 		</script>
 	</body>
 </html>

@@ -18,14 +18,75 @@
         left: 0;
         right: 0;
         font-size: 16px;
-        color: #ddd;
+        color: #333;
         text-align: center;
       }
+
+			.bg {
+				position: fixed;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				background: #eeeeee;
+				z-index: 10001;
+				transition: 0.2s all;
+			}
+
+			.loading {
+				position: absolute;
+				width: 150px;
+				left: calc(50% - 75px);
+				top: calc(50%);
+				z-index: 10002;
+				transition: 0.2s all;
+			}
+
+			.point {
+				width: 40px;
+				height: 40px;
+				border-radius: 100%;
+				transition: 0.2s all;
+				background: #42afe3;
+				display: inline-block;
+			}
+
+			.p1 {
+				-webkit-animation: change 1.2s infinite -2s linear;
+			}
+
+			.p2 {
+				-webkit-animation: change 1.2s infinite -1s linear;
+			}
+
+			.p3 {
+				-webkit-animation: change 1.2s infinite 0s linear;
+			}
+
+			@-webkit-keyframes change {
+				0% {
+					transform: scale(0);
+				}
+
+				50% {
+					transform: scale(1);
+				}
+
+				100% {
+					transform: scale(0);
+				}
+			}
 		</style>
 	</head>
 	<body>
     <div id="title">试试看到我的背面</div>
-		<script src="lib/three.min.js"></script>
+		<div id="bg" class="bg"></div>
+		<div id="loading" class="loading">
+			<div class="point p1"></div>
+			<div class="point p2"></div>
+			<div class="point p3"></div>
+		</div>
+		<script src="//cdn.bootcss.com/three.js/r79/three.min.js"></script>
 		<script src="lib/PCDLoader.js"></script>
 		<script src="lib/TrackballControls.js"></script>
 		<script src="lib/stats.min.js"></script>
@@ -67,20 +128,22 @@
 				// scene.add( axisHelper );
 
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
-				renderer.setClearColor( 0x000000 );
+				renderer.setClearColor( 0xeeeeee );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				document.body.appendChild( renderer.domElement );
 
 				var loader = new THREE.PCDLoader();
 				loader.load( 'model/pcd/Zaghetto.pcd', function ( mesh ) {
-					
+
 					console.log(mesh)
 					scene.add( mesh );
+					scene.getObjectByName('Zaghetto.pcd').material.color.setHex(0xed6c63)
 					var center = mesh.geometry.boundingSphere.center;
 					controls.target.set( center.x, center.y, center.z);
 					controls.update();
 
+					window.showContent()
 				} );
 
 				container = document.createElement( 'div' );
@@ -138,8 +201,15 @@
 
 			}
 
-			window.onload = function () {
-				console.log('all loaded')
+			window.showContent = function () {
+
+				document.getElementById('bg').style.opacity = 0
+				document.getElementById('loading').style.opacity = 0
+
+				setTimeout(() => {
+					document.getElementById('bg').style.display = 'none'
+					document.getElementById('loading').style.display = 'none'
+				}, 350)
 			}
 		</script>
 	</body>

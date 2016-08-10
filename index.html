@@ -35,11 +35,20 @@
 
 			.loading {
 				position: absolute;
-				width: 150px;
-				left: calc(50% - 75px);
+				width: 140px;
+				left: calc(50% - 70px);
 				top: calc(50%);
 				z-index: 10002;
 				transition: 0.2s all;
+			}
+
+			.loading:after {
+				content: '正在加载3D模型';
+				text-align: center;
+				display: block;
+				color: #222;
+				font-size: 12px;
+				padding: 10px 12px 10px 8px;
 			}
 
 			.point {
@@ -76,6 +85,16 @@
 					transform: scale(0);
 				}
 			}
+
+			#code {
+				width: 40px;
+				height: 40px;
+				position: absolute;
+				z-index: 1;
+				right: 0;
+				bottom: 0;
+			}
+
 		</style>
 	</head>
 	<body>
@@ -86,6 +105,7 @@
 			<div class="point p2"></div>
 			<div class="point p3"></div>
 		</div>
+		<img id="code" src="code.png" alt="">
 		<script src="//cdn.bootcss.com/three.js/r79/three.min.js"></script>
 		<script src="lib/PCDLoader.js"></script>
 		<script src="lib/TrackballControls.js"></script>
